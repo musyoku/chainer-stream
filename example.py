@@ -67,65 +67,21 @@ def main():
 	gpu_device = 0
 
 	# specify model
-	if True:
-		model = Stream()
-		model.layer(
-			nn.Linear(None, 1024),
-			nn.LeakyReLU(),
-			nn.Linear(None, 512),
-			nn.LeakyReLU(),
-			lambda x: x[:, 256:]
-		)
-		model.layer(
-			nn.Residual(
-				nn.BatchNormalization(256),
-				nn.Linear(None, 128),
-				nn.ReLU(),
-				nn.BatchNormalization(128),
-				nn.Linear(None, 256),
-			),
-			nn.ELU()
-		)
-		model.layer(
-			nn.Linear(None, 128),
-			nn.Maxout(4),
-			nn.Linear(None, 10)
-		)
-
-	if True:
-		model = Stream()
-		model = Stream(
-			nn.Linear(None, 1024),
-			nn.ReLU(),
-			nn.BatchNormalization(1024),
-			lambda x: x[:, 512:],
-			nn.Linear(None, 256),
-			nn.ReLU(),
-			nn.BatchNormalization(256),
-			lambda x: x[:, 128:],
-			nn.Linear(None, 64),
-			nn.ReLU(),
-			nn.BatchNormalization(64),
-			lambda x: x[:, 32:],
-			nn.Linear(None, 10),
-		)
-
-	if False:
-		model = Stream(
-			nn.Linear(None, 1024),
-			nn.ReLU(),
-			nn.BatchNormalization(1024),
-			nn.Linear(None, 512),
-			nn.ReLU(),
-			nn.BatchNormalization(512),
-			nn.Linear(None, 256),
-			nn.ReLU(),
-			nn.BatchNormalization(256),
-			nn.Linear(None, 128),
-			nn.ReLU(),
-			nn.BatchNormalization(128),
-			nn.Linear(None, 10),
-		)
+	model = Stream(
+		nn.Linear(None, 1024),
+		nn.ReLU(),
+		nn.BatchNormalization(1024),
+		nn.Linear(None, 512),
+		nn.ReLU(),
+		nn.BatchNormalization(512),
+		nn.Linear(None, 256),
+		nn.ReLU(),
+		nn.BatchNormalization(256),
+		nn.Linear(None, 128),
+		nn.ReLU(),
+		nn.BatchNormalization(128),
+		nn.Linear(None, 10),
+	)
 
 	if gpu_device >= 0:
 		model.to_gpu(gpu_device)
