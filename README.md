@@ -1,5 +1,7 @@
 # chainer.Stream
 
+enables you to create a sequential model easily :muscle: 
+
 # Usage
 
 ## Basic
