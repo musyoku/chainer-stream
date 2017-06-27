@@ -149,8 +149,7 @@ y = model(x)
 from stream import Stream
 import stream as nn
 
-model = Stream()
-model.layer(
+model = Stream(
 	nn.Linear(None, 1024),
 	nn.ReLU(),
 	nn.BatchNormalization(1024),
