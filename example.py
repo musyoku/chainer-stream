@@ -94,19 +94,19 @@ def main():
 
 	if True:
 		model = Stream()
-		model.layer(
+		model = Stream(
 			nn.Linear(None, 1024),
 			nn.ReLU(),
 			nn.BatchNormalization(1024),
-			nn.Linear(None, 512),
-			nn.ReLU(),
-			nn.BatchNormalization(512),
+			lambda x: x[:, 512:],
 			nn.Linear(None, 256),
 			nn.ReLU(),
 			nn.BatchNormalization(256),
-			nn.Linear(None, 128),
+			lambda x: x[:, 128:],
+			nn.Linear(None, 64),
 			nn.ReLU(),
-			nn.BatchNormalization(128),
+			nn.BatchNormalization(64),
+			lambda x: x[:, 32:],
 			nn.Linear(None, 10),
 		)
 
