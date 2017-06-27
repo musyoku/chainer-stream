@@ -112,10 +112,10 @@ class Stream(chainer.Chain):
 			self.layer(*layers)
 
 	def layer(self, *layers):
-		self.layers += layers
 		with self.init_scope():
 			for i, layer in enumerate(layers):
 				index = i + len(self.layers)
+				print(index)
 
 				if isinstance(layer, chainer.Link):
 					setattr(self, "layer_%d" % index, layer)
@@ -124,6 +124,7 @@ class Stream(chainer.Chain):
 					for _index, _layer in enumerate(layer.layers):
 						if isinstance(_layer, chainer.Link):
 							setattr(self, "layer_{}_{}".format(index, _index), _layer)
+		self.layers += layers
 
 	def __call__(self, x):
 		for layer in self.layers:
