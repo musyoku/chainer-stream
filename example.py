@@ -88,7 +88,7 @@ def main():
 		)
 		model.layer(
 			nn.Linear(None, 128),
-			nn.LeakyReLU(),
+			nn.Maxout(4),
 			nn.Linear(None, 10)
 		)
 

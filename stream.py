@@ -11,6 +11,13 @@ def LeakyReLU():
 def ELU():
 	return functions.elu
 
+class Maxout():
+	def __init__(self, pool_size=0.5):
+		self.pool_size = pool_size
+
+	def __call__(self, x):
+		return functions.maxout(x, self.pool_size)
+
 class Dropout():
 	def __init__(self, ratio=0.5):
 		self.ratio = ratio
