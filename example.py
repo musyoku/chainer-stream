@@ -67,21 +67,36 @@ def main():
 	gpu_device = 0
 
 	# specify model
-	model = Stream(
-		nn.Linear(None, 1024),
-		nn.ReLU(),
-		nn.BatchNormalization(1024),
-		nn.Linear(None, 512),
-		nn.ReLU(),
-		nn.BatchNormalization(512),
-		nn.Linear(None, 256),
-		nn.ReLU(),
-		nn.BatchNormalization(256),
-		nn.Linear(None, 128),
-		nn.ReLU(),
-		nn.BatchNormalization(128),
-		nn.Linear(None, 10),
-	)
+	if False:
+		model = Stream(
+			nn.Linear(None, 1024),
+			nn.ReLU(),
+			nn.BatchNormalization(1024),
+			nn.Linear(None, 512),
+			nn.ReLU(),
+			nn.BatchNormalization(512),
+			nn.Linear(None, 256),
+			nn.ReLU(),
+			nn.BatchNormalization(256),
+			nn.Linear(None, 128),
+			nn.ReLU(),
+			nn.BatchNormalization(128),
+			nn.Linear(None, 10),
+		)
+	else:
+		model = Stream(
+			nn.Reshape((-1, 1, 28, 28)),
+			nn.Convolution2D(None, 128, ksize=3),
+			nn.BatchNormalization(128),
+			nn.ReLU(),
+			nn.Convolution2D(None, 128, ksize=3),
+			nn.BatchNormalization(128),
+			nn.ReLU(),
+			nn.Convolution2D(None, 128, ksize=3),
+			nn.BatchNormalization(128),
+			nn.ReLU(),
+			nn.Linear(None, 10),
+		)
 
 	if gpu_device >= 0:
 		model.to_gpu(gpu_device)

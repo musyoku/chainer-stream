@@ -68,6 +68,140 @@ class Softplus():
 def Tanh():
 	return functions.tanh
 
+# Pooling
+
+class AveragePooling2D():
+	def __init__(self, ksize, stride=None, pad=0):
+		self.ksize = ksize
+		self.stride = stride
+		self.pad = pad
+
+	def __call__(self, x):
+		return functions.average_pooling_2d(x, self.ksize, self.stride, self.pad)
+
+class AveragePoolingND():
+	def __init__(self, ksize, stride=None, pad=0):
+		self.ksize = ksize
+		self.stride = stride
+		self.pad = pad
+
+	def __call__(self, x):
+		return functions.average_pooling_nd(x, self.ksize, self.stride, self.pad)
+
+class MaxPooling2D():
+	def __init__(self, ksize, stride=None, pad=0, cover_all=True):
+		self.ksize = ksize
+		self.stride = stride
+		self.pad = pad
+		self.cover_all = cover_all
+
+	def __call__(self, x):
+		return functions.max_pooling_2d(x, self.ksize, self.stride, self.pad)
+
+class MaxPoolingND():
+	def __init__(self, ksize, stride=None, pad=0, cover_all=True):
+		self.ksize = ksize
+		self.stride = stride
+		self.pad = pad
+		self.cover_all = cover_all
+
+	def __call__(self, x):
+		return functions.max_pooling_nd(x, self.ksize, self.stride, self.pad)
+
+class SpatialPyramidPooling2D():
+	def __init__(self, pyramid_height, pooling_class):
+		self.pyramid_height = pyramid_height
+		self.pooling_class = pooling_class
+
+	def __call__(self, x):
+		return functions.spatial_pyramid_pooling_2d(x, self.pyramid_height, self.pooling_class)
+
+class Unpooling2D():
+	def __init__(self, ksize, stride=None, pad=0, outsize=None, cover_all=True):
+		self.ksize = ksize
+		self.stride = stride
+		self.pad = pad
+		self.outsize = outsize
+		self.cover_all = cover_all
+
+	def __call__(self, x):
+		return functions.unpooling_2d(x, self.ksize, self.stride, self.pad, self.outsize, self.cover_all)
+
+class UpSampling2D():
+	def __init__(self, indexes, ksize, stride=None, pad=0, outsize=None, cover_all=True):
+		self.indexes = indexes
+		self.ksize = ksize
+		self.stride = stride
+		self.pad = pad
+		self.outsize = outsize
+		self.cover_all = cover_all
+
+	def __call__(self, x):
+		return functions.upsampling_2d(x, self.indexes, self.ksize, self.stride, self.pad, self.outsize, self.cover_all)
+
+# Array manipulations
+
+class BroadcastTo():
+	def __init__(self, shape):
+		self.shape = shape
+
+	def __call__(self, x):
+		return functions.broadcast_to(x, self.shape)
+
+class ExpandDims():
+	def __init__(self, axis):
+		self.axis = axis
+
+	def __call__(self, x):
+		return functions.expand_dims(x, self.axis)
+
+def Flatten():
+	return functions.flatten
+
+class Reshape():
+	def __init__(self, shape):
+		self.shape = shape
+
+	def __call__(self, x):
+		return functions.reshape(x, self.shape)
+
+class RollAxis():
+	def __init__(self, axis, start=0):
+		self.axis = axis
+		self.start = start
+
+	def __call__(self, x):
+		return functions.rollaxis(x, self.axis, self.start)
+
+class Squeeze():
+	def __init__(self, axis):
+		self.axis = axis
+
+	def __call__(self, x):
+		return functions.squeeze(x, self.axis)
+
+class SwapAxes():
+	def __init__(self, axis1, axis2):
+		self.axis1 = axis1
+		self.axis2 = axis2
+
+	def __call__(self, x):
+		return functions.swapaxes(x, self.axis1, self.axis2)
+
+class Tile():
+	def __init__(self, reps):
+		self.reps = reps
+
+	def __call__(self, x):
+		return functions.tile(x, self.reps)
+
+class Transpose():
+	def __init__(self, axes):
+		self.axes = axes
+
+	def __call__(self, x):
+		return functions.transpose(x, self.axes)
+
 # Noise injections
 
 class Dropout():
@@ -115,7 +249,6 @@ class Stream(chainer.Chain):
 		with self.init_scope():
 			for i, layer in enumerate(layers):
 				index = i + len(self.layers)
-				print(index)
 
 				if isinstance(layer, chainer.Link):
 					setattr(self, "layer_%d" % index, layer)
